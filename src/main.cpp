@@ -6,7 +6,7 @@ C12832 lcd(D11, D13, D12, D7, D10);
 
 int main()
 {
-    int counter = 0;
+    //int counter = 0;
     AnalogIn  left(A0);
     AnalogIn right(A1);
 
@@ -50,20 +50,28 @@ int main()
     lcd.rect(0, 0, lcd.width(), lcd.height(), 1);
     wait(2);**/
 
+    lcd.locate(0, 0);
+    lcd.printf("L: ");
+    lcd.rect(10, 0, 110, 5, 1);
+
+    lcd.locate(0, 9);
+    lcd.printf("R: ");
+    lcd.rect(10, 9, 110, 14, 1);
+
     while(true)
     {
-      lcd.cls();
-      lcd.locate(0, 0);
-      lcd.printf("L: ");
-      lcd.rect(10, 0, 110, 5, 1);
-      int lWidth = (left.read()*100) + 10;
-      lcd.fillrect(10, 0, lWidth, 5, 1);
+      float lWidth = (left.read()*100) + 10;
+      float rWidth = (right.read()*100) + 10;
 
-      lcd.locate(0, 9);
-      lcd.printf("R: ");
-      lcd.rect(10, 9, 110, 14, 1);
-      int rWidth = (right.read()*100) + 10;
+      lcd.fillrect(10, 0, lWidth, 5, 1);
+      lcd.fillrect(lWidth-1, 1, 109, 4, 0);
+
       lcd.fillrect(10, 9, rWidth, 14, 1);
+      lcd.fillrect(rWidth-1, 10, 109, 13, 0);
+
+      /**lcd.locate(0,18);
+      lcd.printf("L: %f   R: %f", lWidth, rWidth);
+      wait_ms(100);**/
     }
 
 }
